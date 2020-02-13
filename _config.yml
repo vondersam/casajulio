@@ -2,7 +2,7 @@
 title: PHOTORAMA
 email: ""
 description: "Casa Julio - Holiday Home"
-url: "https://github.com/vondersam"
+url: "https://vondersam.github.io/"
 baseurl: "/casajulio"
 facebook_username: ""
 twitter_username: ""
@@ -33,9 +33,9 @@ comments :
 
 # Internal nav
 nav:
-  - GALLERY: "https://github.com/vondersam/casajulio/gallery/"
-  - JOURNAL: "https://github.com/vondersam/casajulio/journal/"
-  - ABOUT: "https://github.com/vondersam/casajulio/about/"
+  - GALLERY: "https://vondersam.github.io/casajulio/gallery/"
+  - JOURNAL: "https://vondersam.github.io/casajulio/journal/"
+  - ABOUT: "https://vondersam.github.io/casajulio/about/"
 
 # All translation keys
 translations:
