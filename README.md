@@ -1,167 +1,193 @@
-p h o t o r a m a 
-====================
+# Sleek
 
-![photorama](https://raw.githubusercontent.com/sunbliss/photorama/gh-pages/photorama_thumb.gif)
+[![Gem Version](https://badge.fury.io/rb/jekyll-sleek.svg)](https://badge.fury.io/rb/jekyll-sleek) [![Build Status](https://travis-ci.org/janczizikow/sleek.svg?branch=master)](https://travis-ci.org/janczizikow/sleek) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/janczizikow/sleek)
 
-----------
+A modern [Jekyll](https://jekyllrb.com/) theme focused on speed performance & SEO best practices.
 
----> [DEMO](https://sunbliss.github.io/photorama/ "DEMO")  <---
+> ⚠️ This theme is no longer actively maintained.
 
-----------
+![Sleek Jekyll Theme](./sleek.jpg)
 
-A theme for **jekyll**. 
+## Features
 
-Created for gh-pages (project page).
+* Compatible with [Github Pages](https://pages.github.com/)
+* Minimal, responsive and speed performance optimized
+* SEO friendly, with help of [Jekyll SEO Plugin](https://github.com/jekyll/jekyll-seo-tag)
+* Easy [Google Tag Manager](https://tagmanager.google.com/) Integration
+* Support for [Disqus](https://disqus.com/) comments
+* Form submissions with [Formspree](#formspree)
 
-This template was crafted having in mind the photobloggers and the artists.
+[Preview Demo](https://janczizikow.github.io/sleek/)
 
-It uses [Clean Blog](https://github.com/BlackrockDigital/startbootstrap-clean-blog-jekyll "Clean Blog") as its basis.
+## Installation
 
-----------
-## Change Log
+### System Requirements
 
-### Version 2.2 (4/23/2018)
+To use this project, you'll need the following things on your local machine:
 
-<a href="https://github.com/sunbliss/photorama/wiki/How-to-get-SSL-on-Jekyll%3F"> How to get SSL Certificate (Https) For Jekyll</a>
+#### Jekyll
 
-### Version 2.1 (3/22/2017)
+```shell
+gem install jekyll
+```
 
-* Fixed script loading. 
-* Fixed padding bottom for the navbar toggle menu.
+#### NodeJS (8 or greater)
 
+Download and open the [NodeJS installer](https://nodejs.org/en/)
 
-### Version 2.0 (2/4/2017)
+#### Gulp CLI (optional, but recommended)
 
-* HTTPS is now enforced. 
+```shell
+npm install --global gulp-cli
+```
 
-~~**Custom Domains are not supported.**~~
+### Up & Running
 
-~~For the time being, the only way to apply a custom domain name is by removing HTTPS as of the previous version. 
-Hoping Github developers will give its users the ability to add a custom domain served under security.~~
+1. [Fork the repo](https://github.com/janczizikow/sleek/fork)
+2. Clone or download the repo into directory of your choice: `git clone https://github.com/your-github-username/sleek.git`
+3. Inside the directory run `bundle install` and `npm install`
+4. If you want to use [gulp.js](https://gulpjs.com/) run `gulp` or `npm start`
+    * if you don't want to use gulp you can run `bundle exec jekyll serve` instead
 
-### Version 1.2 (1/31/2017)
+#### Installing to existing jekyll project
 
-* Fixed footer code so that the twitter icon links to the twitter_username instead of instagram_username.
+Add this line to your Jekyll site's `Gemfile`:
 
-### Version 1.1 (7/15/2016)
+```ruby
+gem "jekyll-sleek"
+```
 
-* Improved galleries and search section.
-* Better rendering of the header text.
+And add this line to your Jekyll site's `_config.yml`:
 
-### Version 1.0 (6/19/2016)
-* Initial Template
+```yaml
+theme: jekyll-sleek
+```
 
-----------
+And then execute:
 
- **IMPORTANT!!!**
-================
+    $ bundle
 
-### Before you begin: Change the URL and the BASEURL as well as the internal nav links in the _config.yml
+Or install it yourself as:
 
-The **URL** should say `https://yourusername.github.io`
+    $ gem install jekyll-sleek
 
-The **BASEURL** should say `/repositoryname`
+## File Structure Overview
 
-**Internal nav** should say
+```bash
+sleek
+├── _includes	               # theme includes
+├── _js	                       # javascript files (by default jquery will be included with the scripts inside)
+├── _layouts                   # theme layouts (see below for details)
+├── _pages                     # pages folder (empty by default)
+├── _posts                     # blog posts
+├── _sass                      # Sass partials
+├── assets
+|  ├── css	               # minified css files
+|  ├── img                     # images and icons used for the template
+|  └── js		               # bundled and minified files from _js folder
+├── _config.yml                # sample configuration
+├── gulpfile.js                # gulp tasks (tasks autorunner)
+├── index.md                   # sample home page (blog page)
+└── package.json               # gulp tasks
+```
 
-  nav:
+## Usage
 
-  - GALLERY: `"https://yourusername.github.io/repositoryname/gallery/"`
-  - JOURNAL: `"https://yourusername.github.io/repositoryname/journal/"`
-  - ABOUT: `"https://yourusername.github.io/repositoryname/about/`"
+You can modify the theme by changing the settings in `_config.yml`.
 
-If there are problems with loading assets like CSS files and images, make sure that both **URL** and **BASEURL** are set correctly!!! 
+### Posts
 
-----------
+Create a new Markdown file such as 2017-01-13-my-post.md in _post folder. Configure YAML Front Matter (stuff between `---`):
 
-~~**NOT FOR HTTPS served repos!!!**~~
-==================================
+```yaml
+---
+layout: post # needs to be post
+title: Getting Started with Sleek # title of your post
+featured-img: sleek #optional - if you want you can include hero image
+---
+```
 
-~~* Applies for v1.2!~~
+#### Images
 
-If you want to use your **own domain** go to the root of your project's repository, create a CNAME file and add a line with your domain name, e.g. `www.yourdomain.com`.
+In case you want to add a hero image to the post, apart from changing featured-img in YAML, you also need to add the image file to the project. To do so, just upload an image in .jpg format to `_img` folder. The name must before the .jpg file extension has to match with featured-img in YAML. Next, run `gulp img` from command line to generate optimized version of the image and all the thumbnails. You have to restart the jekyll server to see the changes.
 
-Go to your domain name registrar and add a CNAME record pointing your domain to GitHub Pages:
-- type: CNAME
-- host: www.yourdomainname.com
-- answer: yourusername.github.io/repositoryname
-- TTL: 300
+Sleek uses [Lazy Sizes](https://github.com/aFarkas/lazysizes). Lazy Loader for loading images. Check the link for more info. Lazy Sizes doesnt’t require any configuration and it’s going to be included in your bundled js file.
 
-----------
+### Pages
 
-Usage
-============ 
+The home page is located under index.md file. To change the content or design you have to edit the default.html file in `_layouts` folder.
 
-###Quick Start
+In order to add a new page, create a new html or markdown file under root directory or inside _pages folder. To add a link in navigation add it in `_config.yml`:
 
-1. [Fork this repository](https://github.com/sunbliss/photorama/fork) to get started. 
-2. Go to `https://github.com/yourusername/photorama/settings`
-3. Rename the repository to your new project, e.g. *myphotoblog*
-2. Create a new branch called `gh-pages` in your repository. 
-3. Go to the branches directory at `https://github.com/yourusername/repositoryname/branches` and *change* **default branch** to **gh-pages**.
-4. Delete **master** branch. 
-3. GitHub will build your site automatically and publish it at `https://yourusername.github.io/repositoryname/`.  
+```yaml
+# THEME SETTINGS
+navigation: # Navigation links
+  - {name: 'Home', link: '/'}
+  - {name: 'About', link: '/about'}
+  - {name: 'Contact', link: '/contact'}
+```
 
-----------
+`name` is the text that will be shown and link, well, it's a link.
 
-- The homepage welcomes the visitors with 3 animated photos of your choice. It is recommended that all three are landscape orientated for best view.
+### Site configuration
 
-To change the welcome content at the far left of the Home page go here: `/index.html` and fill the responding lines of the YAML with your desired text.
+Sleek comes with [`jekyll-seo-tag`](https://github.com/jekyll/jekyll-seo-tag) plugin preinstalled to make sure your website gets the most useful meta tags. See [usage](https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md) to know how to set it up.
 
-----------
+Additionally, in `_config.yml` you can find custom theme settings under `# THEME SETTINGS` comment. Here's a brief overview of those custom settings:
 
-- To enable **disqus** comments in the posts, change their front matter for comments to 'true'.
+- `navigation` - collection of links that will be shown in the header
+- `tagline` - text that will be displayed on the homepage under the heading.
+- `hero_img` - background image of the homepage hero section
 
-You must have a registered account in disqus, where you will also register a forum for your website.
+Other settings usually enable/disable certain feature, and are discussed with the next sections.
 
-Find the line `s.src = '//yourproject.disqus.com/embed.js';  // ` in the disqus_comments.html and REPLACE 'yourproject' with your forum shortname.
+### Google Tag Manager
 
-----------
+To enable Google Tag Manager, add the uncomment the following line in `_config.yml`:
 
-- In order to send **newsletters** about your posts to your subscribers, you should register an account in [tinyletter](http://www.tinyletter.com " tinyletter").
+```yaml
+google_tag_manager: GTM-XXXXXXX
+```
 
-Find the line `'https://tinyletter.com/yourproject', ` in the *newsletter.html* and replace 'yourproject' with your registered website.
+Replace `GTM-XXXXXXX` with your Google Tag Manager Container ID.
 
-You can always ommit the newsletter rendering by deleting the line `{% include newsletter.html %}
-` in the *default.html* layout.
+**Note** by default GTM tracking snippet will be also included in development environment.
 
-----------
+Google Tag Manager was chosen for this project as it's more flexible than Google Analytics, and it can be used to add GA to your site.
 
-If you want to use the matching **NEWSLETTER** template, you must always create a new file  by copying its respective index.html and renaming it to e.g. 2016-March-newsletter.html and then save it inside the folder and the accompanying images inside the 'images folder', so it can be accessed to your viewers through their browser. In this case the root url for the above newsletter will be ***http://yourgithubusername.github.io/yourproject/2016-March-newsletter.html***. Copy this link and replace this part of the code `http://www.yoursite.com/newsletter/year-month-newsletter` with it.
+### Disqus
 
-----------
+To enable Disqus comments, add your [Disqus shortname](https://help.disqus.com/customer/portal/articles/466208) to `_config.yml`:
 
-**TAGS** and **CATEGORIES** of the posts 
+```yaml
+disqus:
+  shortname: my_disqus_shortname
+```
 
-When you add a tag or a category name in the front matter of a post, don't forget to add the responding markdown files in /journal/tag/ folder and in /journal/category folder, so they can always render when browsing the journal or searching in the respective page.
+### Formspree
 
-----------
+To use [Formspree](https://formspree.io/) with your email address, you need to change the following:
 
-All the credits and the helpers can be found at **ABOUT** page.
+Change `your-email@domain.com` email in `_config.yml`
 
+```yaml
+email: your-email@domain.com
+```
 
-----------
+You can check if it works by simply submitting the form.
 
-Read <a href="https://sunbliss.github.io/photorama/journal/images-size-for-better-performance/">**this**</a> post if you want to ensure your website always loads fast.
+If you have a Formspree Gold Account, you can take advantage of using AJAX to submit form. To do so, uncomment last function in `_js/scripts.js` and run `gulp js`. Now the form will be submitted asynchronously, without leaving the page.
 
+## Contributing
 
-----------
+Bug reports and pull requests are welcome on GitHub at [https://github.com/janczizikow/sleek](https://github.com/janczizikow/sleek). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
-I hope you will find it useful for your projects, photographic or not.
+## Development
 
+To set up your environment to develop this theme, run `bundle install` and `npm install`.
 
-----------
+The theme is setup just like a normal Jekyll site! Check out [file structure overview](#file-structure-overview) for details. To test the theme, run `gulp` and open your browser at `http://localhost:3000`. This starts a Jekyll server using the theme. Add pages, documents, data, etc. like normal to test the theme's contents. As you make modifications to the theme and to the content, your site will regenerate and you should see the changes in the browser after a refresh, just like normal.
 
+## License
 
-##License
-
-The MIT License (MIT)
-
-Copyright (c) 2014 Filippo Oretti, Dario Andrei
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+The theme is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

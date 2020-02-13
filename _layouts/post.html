@@ -1,233 +1,117 @@
 ---
-layout: default
+layout: compress
 ---
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en-US" }}">
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        
-        <meta name="viewport" content="width=device-width">
+{% include head.html %}
 
-<link href="{{ site.baseurl }}/css/tags-wrap.css" rel="stylesheet" />
-  
-    </head>
-    <body>
-  
+<body class="site">
 
-{% assign post = page %}
+{% if site.google_tag_manager %}
 
-<article>
-<!-- Post Header -->
-<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% endif %}')">
-    <div class="container">
-        <div class="row">
-                            <div class="post-heading">
-                    <h1 style="color: #acd578;">{{ page.title }}</h1>
-                    {% if page.subtitle %}
-                    <h2 class="subheading">{{ page.subtitle }}</h2>
-                    {% endif %}
-                    <span class="meta">Posted on {{ page.date | date: "%B %-d, %Y" }}</span>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.google_tag_manager }}"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-<span class="time-tag-categ" style="font-size:.7em;background-color: rgba(128, 128, 128, 0.45);">
+{% endif %}
 
-{% assign minutes = content | number_of_words | divided_by: 180 %}
-<i class="fa fa-clock-o"></i>&nbsp;{% if minutes == 0 %}{% assign minutes = 1 %}{% endif %}
-{{ minutes }} minute read
+{% include header.html %}
 
-
-
- {% if post.tags.size > 0 %}
-  &sim; Tagged with <i class="fa fa-tags"></i>{% if post.tags.size == 1 %} {% else %}{% endif %}&nbsp;:&nbsp;{% for tag in page.tags %}<a href="{{ site.baseurl }}/journal/tag/{{  tag | cgi_encode }}/" data-toggle="tooltip" title="Other posts tagged with {{ tag }}" rel="tag">{{ tag }}</a>{% unless forloop.last %}&nbsp;&bull;&nbsp;{% endunless %}{% endfor %}{% endif %}
-
-
-  {% if post.categories.size > 0 %}
-   &sim; Filed in <i class="fa fa-briefcase"></i>{% if post.categories.size == 1 %} {% else %}{% endif %}&nbsp;:&nbsp;{% for tag in page.categories %}<a href="{{ site.baseurl }}/journal/category/{{ tag | cgi_encode }}/" data-toggle="tooltip" title="Other posts filed in {{ tag }} category" rel="tag">{{ tag }}</a>{% unless forloop.last %}&nbsp;&bull;&nbsp;{% endunless %}{% endfor %%}{% endif %}    
-                    
-   </span>
-
-            </div>
+  {% if page.featured-img %}
+  <div class="hero lazyload" data-bg="{{ site.url }}{{ site.baseurl }}/assets/img/posts/{{ page.featured-img }}.jpg">
+  {% else %}
+  <div class="hero dark-bg">
+  {% endif %}
+    <div class="hero__wrap">
+      {% if post.categories or page.categories %}
+        <div class="hero__categories">
+          {% if post %}
+            {% assign categories = post.categories %}
+          {% else %}
+            {% assign categories = page.categories %}
+          {% endif %}
+          {% for category in categories %}
+            <a class="label" href="{{site.baseurl}}/categories/#{{category|slugize}}">{{category}}</a>
+            {% unless forloop.last %}&nbsp;{% endunless %}
+          {% endfor %}
         </div>
+      {% endif %}
+      <h1 class="hero__title">{{ page.title }}</h1>
+      <p class="hero__meta">
+        <span>
+          <time>{{ page.date | date_to_string }}</time>&nbsp;&middot;
+        </span>
+        <span>
+            {% assign words = content | number_of_words %}
+              {% if words < 360 %}
+                1 min
+              {% else %}
+                {{ words | divided_by:180 }} mins
+            {% endif %} read
+        </span>
+      </p>
     </div>
-</header>
+  </div>
 
-<!-- Post Content -->
-
+  <main class="site__content">
     <div class="container">
-        <div class="row">
-            
+      <article class="post-content" itemprop="articleBody">
 
-               				{{ content }}
+        {{ content }}
 
-                <br>
-          <br>
-    <br>
+      </article>
+      <div class="post-content controls__inner">
+        <div class="controls__item prev">
+          {% if page.previous.url %}
 
+          <span>Previous</span>
+          <a href="{{page.previous.url | relative_url }}">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="6" height="11">
+                    <path fill="fillColor" d="M5.647 1.718c.37-.434.323-1.09-.106-1.465A1.016 1.016 0 0 0 4.095.36L.25 4.875a1.05 1.05 0 0 0 .017 1.378l3.95 4.407c.38.424 1.03.456 1.448.07a1.05 1.05 0 0 0 .07-1.468l-3.34-3.725 3.253-3.819z"/>
+                  </svg>
+              </span>
+            {{page.previous.title | strip_html | truncate: 30}}
+          </a>
+          {% endif %}
+        </div>
 
-               {% include signoff.html %} 
-    <hr class="small">
- {% if site.share %}{% include share.html %}{% endif %}
-                        
-{% if site.comments %}{% include disqus_comments.html %}{% endif %}
-                        
-                <br>
+        <div class="controls__item next">
+          {% if page.next.url %}
+          <span>Next</span>
+          <a href="{{page.next.url | relative_url }}">
+            {{page.next.title | strip_html | truncate: 30}}
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="11">
+                  <path fill="#fillColor" d="M.353 9.282c-.37.434-.323 1.09.106 1.465a1.016 1.016 0 0 0 1.446-.107L5.75 6.125a1.05 1.05 0 0 0-.017-1.378L1.784.34A1.015 1.015 0 0 0 .336.27a1.05 1.05 0 0 0-.07 1.468l3.34 3.725L.353 9.282z"/>
+                </svg>
+              </span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
 
-                <ul class="pager">
-                    {% if page.previous.url %}
-                    <li class="previous">
-                        <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">&larr; Previous Post</a>
-                    </li>
-                    {% endif %}
-                    {% if page.next.url %}
-                    <li class="next">
-                        <a href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title}}">Next Post &rarr;</a>
-                    </li>
-                    {% endif %}
-                </ul>
+    {% if site.disqus.shortname %}
+
+    <div class="comments">
+      <div class="container">
+        <div class="post-content">
+
+          {% include disqus.html %}
 
         </div>
+      </div>
     </div>
-</article>
 
-<br>
+    {% endif %}
 
-<hr class="medium">
+  </main>
 
-            <div class="tags-wrap">
-   <div class="tags">
-
-  <div class="section-heading group" style="color: #fff; text-align: center; margin-top: 10px;">
-
-    <h3>Tags Cloud</h3>
-
-  </div>
-
-{% assign rawtags = "" %}
-{% for post in site.posts %}
-{% assign ttags = post.tags | join:'|' | append:'|' %}
-{% assign rawtags = rawtags | append:ttags %}
-{% endfor %}
-
-{% assign rawtags = rawtags | split:'|' | sort %}
-
-{% assign tags = "" %}
-
-{% for tag in rawtags %}
-{% if tag != "" %}
-
-{% if tags == "" %}
-{% assign tags = tag | split:'|' %}
-{% endif %}
-
-{% unless tags contains tag %}
-{% assign tags = tags | join:'|' | append:'|' | append:tag | split:'|' %}
-{% endunless %}
-{% endif %}
-{% endfor %}
-
-  <div class="tag-list">
-    {% for tag in tags %}
-<a href="{{ site.baseurl }}/journal/tag/{{ tag | slugify }}/" style="text-decoration:none;"> {{ tag }} </a> &nbsp;&nbsp;
-{% endfor %}
-  </div>
-
-</div>
-
-<hr class="medium">
-
-<div class="categories">
-
-  <div class="section-heading group" style="color: #fff; text-align: center; margin-top: 10px;">
-
-    <h3>Categories Cloud</h3>
-
-  </div>
-
- 
-{% assign rawcategories = "" %}
-{% for post in site.posts %}
-{% assign tcategories = post.categories | join:'|' | append:'|' %}
-{% assign rawcategories = rawcategories | append:tcategories %}
-{% endfor %}
-
-{% assign rawcategories = rawcategories | split:'|' | sort %}
-
-{% assign categories = "" %}
-
-{% for category in rawcategories %}
-{% if tag != "" %}
-
-{% if categories == "" %}
-{% assign categories = category | split:'|' %}
-{% endif %}
-
-{% unless categories contains category %}
-{% assign categories = categories | join:'|' | append:'|' | append:category | split:'|' %}
-{% endunless %}
-{% endif %}
-{% endfor %}
-
- <div class="category-list">
-   {% for category in categories %}
-<a href="{{ site.baseurl }}/journal/category/{{ category | slugify }}/"> {{ category }} </a> &nbsp;&nbsp;
-{% endfor %}
-  </div>
-
-</div>
-
-<hr class="medium">
-
-<br>
-<br>
-
-       </div>
-
-
-<!-- jQuery -->    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<!-- Custom Theme JavaScript -->
-<script src="{{ site.baseurl }}/js/main.min.js "></script>
-<!-- include image popups -->
-<script src="{{ site.baseurl }}/js/jquery.magnific-popup.js"></script>
-
-<script type="text/javascript">
-      $(document).ready(function($) {
-        $('a.popup').magnificPopup({
-         type: 'image',
-	  gallery:{
-         enabled:true,
-         navigateByImgClick: true,
-         preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-       },
-image: {
-      titleSrc: function(item) {
-              return item.el.attr('title') + '&nbsp;' + item.el.attr('data-caption');
-            }
-        }
-          // other options
-      });
-});
-    </script>
-
-<script src="{{ site.baseurl }}/js/retina.min.js"></script>
-<!-- include Masonry -->
-<script src="{{ site.baseurl }}/js/isotope.pkgd.min.js"></script> 
-<!-- include mousewheel plugins -->
-<script src="{{ site.baseurl }}/js/jquery.mousewheel.min.js"></script>
-<!-- include carousel plugins -->
-<script src="{{ site.baseurl}}/js/jquery.tinycarousel.min.js"></script>
-<!-- include svg line drawing plugin -->
-<script src="{{ site.baseurl }}/js/jquery.lazylinepainter.min.js"></script>
-<!-- include custom script -->
-<script src="{{ site.baseurl }}/js/scripts.js"></script>
-<!-- Modernizr -->
- <script src="{{ site.baseurl }}/js/modernizr.js"></script>
-
+  {% include footer.html %}
+  {% include mathjax.html %}
 </body>
+
 </html>
-
-
-
-
