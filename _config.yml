@@ -22,9 +22,9 @@ social:
 # THEME SETTINGS
 navigation: # Navigation links
   - {name: 'Home', link: '/'}
-  - {name: 'About', link: '/about'}
-  - {name: 'La Palma', link: '/lapalma'}
-  - {name: 'Contact', link: '/contact'}
+  - {name: 'About', link: '/en/about'}
+  - {name: 'La Palma', link: '/en/lapalma'}
+  - {name: 'Contact', link: '/en/contact'}
 
 tagline: >
   Holiday Home

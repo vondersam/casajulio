@@ -5,8 +5,12 @@ layout: compress
 <html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 
   {% include head.html %}
+  {% include alternate.html %}
+
 
   <body class="site">
+    {% include lang_nav.html %}
+
 
     {% if site.google_tag_manager %}
 
@@ -40,7 +44,7 @@ layout: compress
         </div>
       </section>
     </main>
-
+    {% include lang_nav.html %}
     {% include footer.html %}
 
   </body>
