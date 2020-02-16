@@ -9,8 +9,8 @@
       <nav class="header__links">
         <div class="container header__links-wrapper">
           {% for item in site.navigation %}
-            <a class="header__link" href="{{ item.link | relative_url }}" itemprop="url">
-              <span itemprop="name">{{ item.name }}</span>
+            <a class="header__link" href="{{ page.lang | page.link }}" itemprop="url">
+              <span itemprop="name">{{ site.data.translations[item.name][page.lang] }}</span>
             </a>
           {% endfor %}
         </div>
